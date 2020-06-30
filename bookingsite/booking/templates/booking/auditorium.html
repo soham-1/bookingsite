@@ -1,0 +1,69 @@
+{% extends 'booking/sidebar.html' %}
+{% load static %}
+{% block pagecontent %}
+
+<div class="container m-xl-4">
+  <br>
+    <!-- Card deck -->
+    <div class="card-deck row">
+      {% if audi %}
+        {% for i in audi %}
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <!-- Card -->
+            <div class="card">
+          
+              <!--Card image-->
+              <div class="view overlay" style="height: 250px;">
+                <img class="card-img-top" src="{{ MEDIA_URL }}{{ path }}/{{ i.img }}" alt="Card image cap">
+                <a href="#!">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+          
+              <!--Card content-->
+              <div class="card-body">
+          
+                <!--Title-->
+                <h4 class="card-title">{{ i.name }}</h4>
+                <!--Text-->
+                <p class="card-text">{{ i.description }}</p>
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                {% if 'student' in groups and not superuser %}
+                <a href=" {% url 'bookingform' i.name %} "><button type="button" class="btn btn-light-blue btn-md btn-primary">Book</button></a>
+                {% endif %}
+                {% if 'teacher' in groups and not superuser %}
+                <a href=" {% url 'addaudi' i.name %} "><button type="button" class="btn btn-light-blue btn-md btn-primary">Edit</button></a>
+                {% endif %}
+                {% if superuser %}
+                <a href=" {% url 'bookingform' i.name %} "><button type="button" class="btn btn-light-blue btn-md btn-primary">Book</button></a>
+                <a href=" {% url 'addaudi' i.name %} "><button type="button" class="btn btn-light-blue btn-md btn-primary">Edit</button></a>
+                {% endif %}
+              </div>
+          
+            </div>
+            <!-- Card -->
+            </div>
+        {% endfor %}
+      {% else %}
+        <br><br>
+        <h4>no auditoriums added in database</h4>
+        <br><br>
+        <a href=" {% url 'addaudi' -1 %} "><button class="btn btn-primary"> Add</button></a>
+      {% endif %}
+    </div>
+    <!-- Card deck -->
+      
+    </div>
+  <style>
+      .card{
+  margin: 5% 0%;
+}
+
+.card-body{
+  margin: 0% 0% 0% 3%;
+  padding: 6% 0%;
+}
+
+
+  </style>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'booking/sidebar.html' %}
+{% load static %}
+{% block pagecontent %}
+<div class="container m-xl-4">
+    <br>
+
+
+{% if not audi %}
+    <form method="post" enctype="multipart/form-data"> <!-- this enc type is ver ynecessary for uploading files
+                                        otherwise data is added to models but image is not uploaded to media directory -->
+        {% csrf_token %}
+        <h5>room no.(name)</h5>
+        <input type="text" name="audiname" required><br><br>
+        <h5>room descriptions (like capacity, features)</h5>
+        <input type="text" name="desc" style="width: 500px;" required><br><br>
+        <h5>time slots (enter in format 1-2, 2-3, 3-4)</h5>
+        <input type="text" name="time"><br><br>
+        <b>days available</b> (press ctrl and click) <br>
+        <select name="days" multiple required>
+            <option value="Sunday">sunday</option>
+            <option value="Monday">monday</option>
+            <option value="Tuesday">tuesday</option>
+            <option value="Wednessday">wednessday</option>
+            <option value="Thursday">thursday</option>
+            <option value="Friday">friday</option>
+            <option value="Saturday">saturday</option>
+        </select>
+        <br><br>
+        <h5>upload image of room</h5>
+        <input type="file" name="image">
+        <br><br><br><br>
+        <button type="submit" class="btn btn-success">ADD</button>
+    </form>
+{% else %}
+    <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        <h5>room no.(name)</h5>
+        <input type="text" name="audiname" value="{{ audi.name }}" required><br><br>
+        <h5>room descriptions (like capacity, features)</h5>
+        <input type="text" name="desc" style="width: 500px;" value="{{ audi.description }}" required><br><br>
+        <h5>time slots (enter in format 1-2, 2-3, 3-4 in 24 hr format)</h5>
+        <input type="text" name="time"><br><br>
+        <b>days available</b> (press ctrl and click) <br>
+        <select name="days" multiple required>
+            <!-- <option value="" selected hidden>days</option> -->
+            <option value="Sunday">sunday</option> <!-- value must be same as in choice field -->
+            <option value="Monday">monday</option>
+            <option value="Tuesday">tuesday</option>
+            <option value="Wednessday">wednessday</option>
+            <option value="Thursday">thursday</option>
+            <option value="Friday">friday</option>
+            <option value="Saturday">saturday</option>
+        </select>
+        <br><br>
+        <h5>change image</h5>
+        <input type="file" name="image">
+        <img src="{{ MEDIA_URL }}{{ path }}/{{ audi.img }}" alt="img" style="width: 200px; height: 200px; border-radius: 50%;">
+        <br>
+        <button type="submit" class="btn btn-success">ADD</button>
+    </form>
+{% endif %}
+</div>
+{% endblock %}

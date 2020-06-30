@@ -1,0 +1,64 @@
+{% extends 'booking/sidebar.html' %}
+{% load static %}
+{% block pagecontent %}
+<div class="container m-xl-4"><br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date</th>
+            <th scope="col">Timing</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+        <tr>
+            <td> {{ event.eventname }}</td>
+            <td>{{ event.eventdesc }}</td>
+            <td>{{ event.eventdate }}</td>
+            <td>{{ event.slots }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if 'student' in groups %}
+    <br>
+    <br>
+    <br>
+    <br><br>
+    <br>
+        <hr style="height: 3px ;">
+        <h3>My Applications</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Timing</th>
+                <th scope="col">status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event in appl %}
+            <tr>
+                <td> {{ event.eventname }}</td>
+                <td>{{ event.eventdesc }}</td>
+                <td>{{ event.eventdate }}</td>
+                <td>{{ event.slots }}</td>
+                {% if event.status == 1 %}
+                <td>Passed</td>
+                {% elif event.status == -1 %}
+                <td>Rejected</td>
+                {% elif event.status == 0 %}
+                <td>pending</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'booking/sidebar.html' %}
+{% load static %}
+{% block pagecontent %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Booking Form HTML Template</title>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href=" {% static 'booking/bookingform/css/bootstrap.min.css' %} " />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href=" {% static 'booking/bookingform/css/style.css' %} " />
+
+</head>
+
+<body>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form" background=" {% static 'booking/bookinform/img/background.jpg' %} ">
+						<div class="form-header">
+							<h1>Make your reservation</h1>
+						</div>
+						<form method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<input class="form-control" type="text" placeholder="Title" name="title">
+								<span class="form-label">Title</span>
+                            </div>
+                            <div class="form-group">
+								<input class="form-control" type="text" placeholder="Description" name="desc">
+								<span class="form-label">Description</span>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" type="date" name="date" required>
+										<span class="form-label">Date</span>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<select class="form-control" name="slots" required>
+											<option hidden>Time slots</option>
+											{% for i in timeslotobj %}
+											<option value={{ i.start_at }}>{{ i.start_at }} : {{ i.close_at }}</option>
+											{% endfor %}
+										</select>
+										<span class="select-arrow"></span>
+										<span class="form-label">time slots</span>
+									</div>
+								</div>
+								
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group">
+										<select class="form-control" name="exp" required>
+											<option hidden>Expected people</option>
+											<option value=50> &lt50 </option>
+											<option value=100> &lt100 </option>
+											<option value=200> &lt200 </option>
+											<option value=300> &gt200 </option>
+										</select>
+										<span class="select-arrow"></span>
+										<span class="form-label">Expected people</span>
+									</div>
+								</div>						
+								
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" type="email" placeholder="Enter your Email" name="email">
+										<span class="form-label">Email</span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" type="tel" placeholder="Enter you Phone" name="phone">
+										<span class="form-label">Phone</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-btn">
+								<button class="submit-btn" type="submit">Book Now</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src=" {% static 'js/jquery.min.js' %} "></script>
+	<script>
+		$('.form-control').each(function () {
+			floatedLabel($(this));
+		});
+
+		$('.form-control').on('input', function () {
+			floatedLabel($(this));
+		});
+
+		function floatedLabel(input) {
+			var $field = input.closest('.form-group');
+			if (input.val()) {
+				$field.addClass('input-not-empty');
+			} else {
+				$field.removeClass('input-not-empty');
+			}
+		}
+	</script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+<style>
+	#stime:before {
+	content:'Start Time :';
+	margin-right:0.6em;
+	color:#9d9d9d;
+	}
+	#etime:before {
+	content:'End Time :';
+	margin-right:0.6em;
+	color:#9d9d9d;
+	}
+</style>
+</html>
+{% endblock %}

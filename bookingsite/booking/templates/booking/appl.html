@@ -1,0 +1,28 @@
+{% extends 'booking/sidebar.html' %}
+{% load static %}
+{% block pagecontent %}
+<div class="container m-xl-4"><br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date</th>
+            <th scope="col">Timing</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+        <tr>
+            <td> {{ event.eventname }}</td>
+            <td>{{ event.eventdesc }}</td>
+            <td>{{ event.eventdate }}</td>
+            <td>{{ event.slots }}</td>
+            <td><a href=" {% url 'pass' 1 event.id %} "> Pass</a></td>
+            <td><a href=" {% url 'pass' -1 event.id %} "> Reject</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
